@@ -8,6 +8,7 @@ import pickle
 MODELS = {
     'ffhq': ('https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl', None),
     'afhqwild': ('https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/afhqwild.pkl', None),
+    'ISIC': ('https://drive.google.com/uc?export=download&id=1Yt4nWR4snmvBFEJ4lc8RSButA75XtDmj', None),
 }
 
 
