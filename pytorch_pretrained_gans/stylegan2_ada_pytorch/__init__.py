@@ -64,7 +64,7 @@ def add_utils_to_path():
         print(f'Added {util_path} to path')
 
 
-def make_stylegan2(model_name='ffhq') -> torch.nn.Module:
+def make_stylegan2(model_name='ISIC') -> torch.nn.Module:
     """G takes as input an image in NCHW format with dtype float32, normalized 
     to the range [-1, +1]. Some models also take a conditioning class label, 
     which is passed as img = G(z, c)"""
