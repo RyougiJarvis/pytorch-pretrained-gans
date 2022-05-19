@@ -14,12 +14,17 @@ MODELS = {
 
 def download_url(url, download_dir=None, filename=None):
     parts = urlparse(url)
+    print(parts)
     if download_dir is None:
         hub_dir = get_dir()
+        print(hub_dir)
         download_dir = os.path.join(hub_dir, 'checkpoints')
+        print(download_dir)
     if filename is None:
         filename = os.path.basename(parts.path)
+        print(filename)
     cached_file = os.path.join(download_dir, filename)
+    print(cached_file)
     if not os.path.exists(cached_file):
         sys.stderr.write('Downloading: "{}" to {}\n'.format(url, cached_file))
         download_url_to_file(url, cached_file)
