@@ -95,10 +95,10 @@ def make_stylegan2(model_name='ISIC') -> torch.nn.Module:
     to the range [-1, +1]. Some models also take a conditioning class label, 
     which is passed as img = G(z, c)"""
     add_utils_to_path()  # we need dnnlib and torch_utils in the path
-    url, num_classes = MODELS[model_name]
-    cached_file = download_url(url)
-    assert cached_file.endswith('.pkl')
-    with open(cached_file, 'rb') as f:
+#     url, num_classes = MODELS[model_name]
+#     cached_file = download_url(url)
+#     assert cached_file.endswith('.pkl')
+    with open('/content/drive/My Drive/Colab Notebooks/ISIC2017/anotherWay/ISIC128_ada.pkl', 'rb') as f:
         G = pickle.load(f)['G_ema']
     G = GeneratorWrapper(G, num_classes=num_classes)
     return G.eval()
