@@ -3,6 +3,7 @@ import sys
 import torch
 from torch.hub import urlparse, get_dir, download_url_to_file
 import pickle
+import re
 
 
 MODELS = {
@@ -11,23 +12,42 @@ MODELS = {
     'ISIC': ('https://drive.google.com/uc?export=download&id=1Yt4nWR4snmvBFEJ4lc8RSButA75XtDmj', None),
 }
 
+def download_google_drive(url, output_name):
+    print('Downloading', url)
+    session = requests.Session()
+    r = session.get(url, allow_redirects=True)
+    r.raise_for_status()
+
+    # Google Drive virus check message
+    if r.encoding is not None:
+        tokens = re.search('(confirm=.+)&amp;id', str(r.content))
+        if tokens is None:
+          tokens = re.search('(confirm=.)', str(r.content))
+        assert tokens is not None, 'Could not extract token from response'
+        
+        url = url.replace('id=', f'{tokens[1]}&id=')
+        r = session.get(url, allow_redirects=True)
+        r.raise_for_status()
+
+    assert r.encoding is None, f'Failed to download weight file from {url}'
+
+    with open(output_name, 'wb') as f:
+        f.write(r.content)
 
 def download_url(url, download_dir=None, filename=None):
     parts = urlparse(url)
-    print(parts)
     if download_dir is None:
         hub_dir = get_dir()
-        print(hub_dir)
         download_dir = os.path.join(hub_dir, 'checkpoints')
-        print(download_dir)
     if filename is None:
         filename = os.path.basename(parts.path)
-        print(filename)
     cached_file = os.path.join(download_dir, filename)
-    print(cached_file)
     if not os.path.exists(cached_file):
         sys.stderr.write('Downloading: "{}" to {}\n'.format(url, cached_file))
-        download_url_to_file(url, cached_file)
+        if 'drive.google' in url:
+            download_google_drive(url, output_name)
+        else:
+            download_url_to_file(url, cached_file)
     return cached_file
 
 
