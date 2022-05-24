@@ -4,6 +4,7 @@ import torch
 from torch.hub import urlparse, get_dir, download_url_to_file
 import pickle
 import re
+import requests
 
 
 MODELS = {
