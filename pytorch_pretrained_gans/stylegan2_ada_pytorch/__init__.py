@@ -45,7 +45,7 @@ def download_url(url, download_dir=None, filename=None):
     if not os.path.exists(cached_file):
         sys.stderr.write('Downloading: "{}" to {}\n'.format(url, cached_file))
         if 'drive.google' in url:
-            download_google_drive(url, output_name)
+            download_google_drive(url, cached_file)
         else:
             download_url_to_file(url, cached_file)
     return cached_file
