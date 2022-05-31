@@ -98,7 +98,7 @@ def make_stylegan2(model_name='ISIC') -> torch.nn.Module:
     url, num_classes = MODELS[model_name]
 #     cached_file = download_url(url)
 #     assert cached_file.endswith('.pkl')
-    with open('/home/jiawei/src/ISIC128_ada.pkl', 'rb') as f:
+    with open('/content/drive/My Drive/Colab Notebooks/ISIC2017/anotherWay/ISIC128_ada.pkl', 'rb') as f:
         G = pickle.load(f)['G_ema']
     G = GeneratorWrapper(G, num_classes=num_classes)
     return G.eval()
